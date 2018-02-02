@@ -5,7 +5,6 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -29,15 +28,9 @@ public class Rating extends RatingBar implements Input {
     public void create(LinearLayout column) {
         column.addView(part(id.task.success));
 
-        LinearLayout layout = new LinearLayout(getContext());
-        layout.addView(this);
-        layout.setGravity(Gravity.CENTER);
-        column.addView(layout);
-
-        setMax(3);
-        setNumStars(3);
+        setMax(5);
         setOnRatingBarChangeListener(actionListener);
-        setOnLongClickListener(longClickListener);
+        column.addView(this);
     }
 
     @Override
@@ -53,7 +46,7 @@ public class Rating extends RatingBar implements Input {
     public void update(Measure measure, boolean send) {
         setProgress(measure.successes);
 
-        measure.attempts = 3;
+        measure.attempts = 5;
         id.update(measure, send);
     }
 
@@ -63,17 +56,6 @@ public class Rating extends RatingBar implements Input {
             id.measure.successes = (int)(rating);
 
             update(id.measure, fromUser);
-        }
-    };
-
-    private OnLongClickListener longClickListener = new OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View v) {
-            id.measure.successes = 0;
-            setProgress(0);
-
-            update(id.measure, true);
-            return true;
         }
     };
 
