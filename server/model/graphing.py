@@ -44,7 +44,7 @@ def get_data(tasks, phase='teleop', teams=None):
 				match = sm_dal.match_names[row['match_id']]
 				attempts = row['attempts']
 				successes = row['successes']
-				capability = row['capability']
+				capability = sm_dal.task_option_names[row['capability']]
 
 				team_data.append([team, task, match, successes, attempts, capability])
 

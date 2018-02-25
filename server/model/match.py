@@ -138,13 +138,10 @@ class MatchDal(object):
             actor = sm_dal.actor_names[row['actor_id']]
             phase = sm_dal.phase_names[row['phase_id']]
             measuretype = sm_dal.measuretype_names[row['measuretype_id']]
-            capability = row['capability']
+            capability = sm_dal.task_option_names[row['capability']]
             attempts = row['attempts']
             successes = row['successes']
             cycle_times = row['cycle_times']
-
-            if capability > 0 and not capability == 100:
-                capability = sm_dal.task_option_names[capability].split('-')[1]
 
             out += (json.dumps(OrderedDict([('match', match), ('team', team),
                                             ('task', task), ('phase', phase),
@@ -326,7 +323,7 @@ class MatchDal(object):
         elif data_type == 'count':
             return 0, attempt_count, success_count, 0, attempt_id
         elif data_type == 'percentage':
-            return capability, 0, 0, 0, attempt_id
+            return 0, 100, success_count, 0, attempt_id
         elif data_type == 'boolean':
             return 0, attempt_count, success_count, 0, attempt_id
         elif data_type == 'enum':
